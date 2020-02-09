@@ -1,2 +1,2 @@
 # cdrcsvtopostgres
-Fullfills PosgresDB of records from .csv asterisc CDRs
+Fullfills PosgresDB of records from .csv asterisk CDRs
