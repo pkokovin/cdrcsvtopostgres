@@ -13,7 +13,7 @@ import static ru.kokovin.csvtodb.util.ParserUtil.*;
 
 public class Application {
     public static void main(String[] args) throws IOException {
-        File parseDir = new File("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_jan");
+        File parseDir = new File(".");
         File[] files = parseDir.listFiles();
         for (File curr: files) {
             List<String> records = new ArrayList<>();
