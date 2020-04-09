@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS cdr;
 
 CREATE TABLE cdr
 (
-  calldate timestamp with time zone NOT NULL default now(),
+  id serial NOT NULL,
+  calldate timestamp without time zone NOT NULL default now(),
   clid varchar(80) NOT NULL default '',
   src varchar(80) NOT NULL default '',
   dst varchar(80) NOT NULL default '',
@@ -20,4 +21,3 @@ CREATE TABLE cdr
   uniqueid varchar(32) NOT NULL default '',
   userfield varchar(255) NOT NULL default ''
 );
-CREATE UNIQUE INDEX cdr_unique_uniqueid_idx ON cdr (uniqueid);

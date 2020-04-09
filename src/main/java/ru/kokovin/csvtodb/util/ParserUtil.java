@@ -2,16 +2,21 @@ package ru.kokovin.csvtodb.util;
 
 import ru.kokovin.csvtodb.model.Record;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import static ru.kokovin.csvtodb.util.DateTimeUtil.*;
 
 public class ParserUtil {
     public static Record parse(String rec) {
         Record record = new Record();
-        if (!rec.contains("Dial")&&!rec.contains("Queue")) {
+        if (!rec.contains("Dial")
+                && !rec.contains("Queue")
+                && !rec.contains("GosubIf")
+                && !rec.matches("(.*),\\s(.*)")
+                && !rec.matches("(.*)\\s,(.*)")
+                && !rec.matches("(.*)\\w,(.*)")
+                && !rec.matches("(.*),\\w(.*)")) {
             String[] params = rec.split(",");
+            record.setAccountcode(cut(params[0]));
             record.setSrc(cut(params[1]));
             record.setDst(cut(params[2]));
             record.setDcontext(cut(params[3]));
@@ -26,9 +31,11 @@ public class ParserUtil {
             record.setDisposition(cut(params[14]));
             record.setAmaflags(cut(params[15]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(params[16]));
-        } else if (rec.contains("Dial")&&rec.contains("ANSWERED")){
+            record.setUserfield(cut(params[17]));
+        } else if ((rec.contains("Dial") && rec.contains("ANSWERED"))) {
             String[] paramsFirst = rec.split("\",\"");
             String[] paramsSec = rec.split(",");
+            record.setAccountcode(paramsFirst[0]);
             record.setSrc(paramsFirst[1]);
             record.setDst(paramsFirst[2]);
             record.setDcontext(paramsFirst[3]);
@@ -43,9 +50,11 @@ public class ParserUtil {
             record.setDisposition(cut(paramsSec[paramsSec.length - 4]));
             record.setAmaflags(cut(paramsSec[paramsSec.length - 3]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(paramsSec[paramsSec.length - 2]));
+            record.setUserfield(cut(paramsSec[paramsSec.length - 1]));
         } else {
             String[] paramsFirst = rec.split("\",\"");
             String[] paramsSec = rec.split(",");
+            record.setAccountcode(paramsFirst[0]);
             record.setSrc(paramsFirst[1]);
             record.setDst(paramsFirst[2]);
             record.setDcontext(paramsFirst[3]);
@@ -60,6 +69,7 @@ public class ParserUtil {
             record.setDisposition(cut(paramsSec[paramsSec.length - 4]));
             record.setAmaflags(cut(paramsSec[paramsSec.length - 3]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(paramsSec[paramsSec.length - 2]));
+            record.setUserfield(cut(paramsSec[paramsSec.length - 1]));
         }
         return record;
     }
@@ -70,7 +80,7 @@ public class ParserUtil {
 
     private static String cut(String row) {
         String result = "";
-        if (row != null && row.startsWith("\"")&&row.endsWith("\"")) {
+        if (row != null && row.startsWith("\"") && row.endsWith("\"")) {
             result = row.substring(1, row.length() - 1);
         }
         return result;

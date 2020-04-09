@@ -1,21 +1,21 @@
 package ru.kokovin.csvtodb.util;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtil {
-    public static Date convert(String date) {
+    private static final Logger log = LoggerFactory.getLogger(DateTimeUtil.class);
+    public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static LocalDateTime convert(String date) {
+        log.info("trying convert to date string : " + date);
         String[] parts = date.split(" ");
-        Calendar calendar = new GregorianCalendar();
-        int year = Integer.parseInt(parts[0].split("-")[0]);
-        int month = Integer.parseInt(parts[0].split("-")[1]);
-        int day = Integer.parseInt(parts[0].split("-")[2]);
-        int hour = Integer.parseInt(parts[1].split(":")[0]);
-        int min = Integer.parseInt(parts[1].split(":")[1]);
-        int sec = Integer.parseInt(parts[1].split(":")[2]);
-        calendar.set(year, month, day, hour, min, sec);
-        Date result = new Date(calendar.getTimeInMillis());
+        StringBuilder builder = new StringBuilder();
+        LocalDateTime result = LocalDateTime.of(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]));
         return result;
     }
 }

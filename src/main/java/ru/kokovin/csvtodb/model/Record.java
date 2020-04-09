@@ -1,10 +1,17 @@
 package ru.kokovin.csvtodb.model;
 
+import ru.kokovin.csvtodb.util.DateTimeUtil;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name="cdr")
+@NamedNativeQuery(name = "GET_RECORDS_BY_CLID",
+        query = "select * from cdr c where c.clid like CONCAT('%', :clid, '%') " +
+                "and c.disposition = 'ANSWERED' and c.dst like '8%' and c.dst not like '8812%'",
+        resultClass = Record.class)
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,8 +19,7 @@ public class Record {
     private Long id;
 
     @Column(name = "calldate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date calldate;
+    private LocalDateTime calldate;
 
     @Column(name = "clid")
     private String clid;
@@ -62,7 +68,7 @@ public class Record {
 
     public Record() {}
 
-    public Record(Date calldate, String clid, String src, String dst
+    public Record(LocalDateTime calldate, String clid, String src, String dst
             , String dcontext, String channel, String dstchannel
             , String lastapp, String lastdata, Long duration, Long billsec
             , String disposition, Integer amaflags, String accountcode
@@ -93,11 +99,11 @@ public class Record {
         this.id = id;
     }
 
-    public Date getCalldate() {
+    public LocalDateTime getCalldate() {
         return calldate;
     }
 
-    public void setCalldate(Date calldate) {
+    public void setCalldate(LocalDateTime calldate) {
         this.calldate = calldate;
     }
 
