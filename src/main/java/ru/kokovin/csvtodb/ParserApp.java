@@ -25,7 +25,6 @@ public class ParserApp {
     Charset utf8 = StandardCharsets.UTF_8;
 
     public void parseDir(String path) throws IOException {
-//    File parseDir = new File("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_feb");
         File parseDir = new File(path);
         File[] files = parseDir.listFiles();
         for (

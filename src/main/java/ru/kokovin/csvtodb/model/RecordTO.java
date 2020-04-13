@@ -1,67 +1,37 @@
 package ru.kokovin.csvtodb.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@ToString
 public class RecordTO {
+    @Getter
+    @Setter
     private String calldate;
+    @Getter
+    @Setter
     private String source;
-    private String destinadion;
+    @Getter
+    @Setter
+    private String destination;
+    @Getter
+    @Setter
     private String dcontext;
+    @Getter
+    @Setter
     private String lastdata;
+    @Getter
+    @Setter
     private Long billsec;
 
-    public RecordTO(String calldate, String source, String destinadion, String dcontext, String lastdata, Long billsec) {
+    public RecordTO(String calldate, String source, String destination, String dcontext, String lastdata, Long billsec) {
         this.calldate = calldate;
         this.source = source;
-        this.destinadion = destinadion;
+        this.destination = destination;
         this.dcontext = dcontext;
         this.lastdata = lastdata;
         this.billsec = billsec;
     }
 
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getDestinadion() {
-        return destinadion;
-    }
-
-    public void setDestinadion(String destinadion) {
-        this.destinadion = destinadion;
-    }
-
-    public Long getBillsec() {
-        return billsec;
-    }
-
-    public void setBillsec(Long billsec) {
-        this.billsec = billsec;
-    }
-
-    public String getCalldate() {
-        return calldate;
-    }
-
-    public void setCalldate(String calldate) {
-        this.calldate = calldate;
-    }
-
-    public String getDcontext() {
-        return dcontext;
-    }
-
-    public void setDcontext(String dcontext) {
-        this.dcontext = dcontext;
-    }
-
-    public String getLastdata() {
-        return lastdata;
-    }
-
-    public void setLastdata(String lastdata) {
-        this.lastdata = lastdata;
-    }
 }

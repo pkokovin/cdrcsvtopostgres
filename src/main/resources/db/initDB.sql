@@ -19,5 +19,7 @@ CREATE TABLE cdr
   amaflags bigint NOT NULL default '0',
   accountcode varchar(20) NOT NULL default '',
   uniqueid varchar(32) NOT NULL default '',
-  userfield varchar(255) NOT NULL default ''
+  userfield varchar(255) NOT NULL default '',
+  direction_id integer,
+  foreign key (direction_id) references direction (id)
 );

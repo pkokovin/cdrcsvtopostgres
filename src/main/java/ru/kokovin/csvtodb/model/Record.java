@@ -1,252 +1,160 @@
 package ru.kokovin.csvtodb.model;
 
-import ru.kokovin.csvtodb.util.DateTimeUtil;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
+
+@SuppressWarnings({"PMD", "JpaAttributeTypeInspection"})
+@ToString
 @Entity
-@Table(name="cdr")
-@NamedNativeQuery(name = "GET_RECORDS_BY_CLID",
-        query = "select * from cdr c where c.clid like CONCAT('%', :clid, '%') " +
-                "and c.disposition = 'ANSWERED' and c.dst like '8%' and c.dst not like '8812%'",
-        resultClass = Record.class)
-public class Record {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+@Table(name = "cdr")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "GET_RECORDS_BY_CLID",
+                query = " select * from cdr c where c.clid like CONCAT('%', :clid, '%') " +
+                        " and c.disposition = 'ANSWERED' and c.dst like '8%' " +
+                        " and c.dst not like '8812%' " +
+                        " and c.dst not like '8800%' " +
+                        " and c.calldate between :d1 and :d2",
+                resultClass = Record.class)
+})
+public class Record extends AbstractIdentifiableObject{
 
+    @Getter
+    @Setter
     @Column(name = "calldate")
     private LocalDateTime calldate;
 
+    @Getter
+    @Setter
     @Column(name = "clid")
     private String clid;
 
+    @Getter
+    @Setter
     @Column(name = "src")
     private String src;
 
+    @Getter
+    @Setter
     @Column(name = "dst")
     private String dst;
 
+    @Getter
+    @Setter
     @Column(name = "dcontext")
     private String dcontext;
 
+    @Getter
+    @Setter
     @Column(name = "channel")
     private String channel;
 
+    @Getter
+    @Setter
     @Column(name = "dstchannel")
     private String dstchannel;
 
+    @Getter
+    @Setter
     @Column(name = "lastapp")
     private String lastapp;
 
+    @Getter
+    @Setter
     @Column(name = "lastdata")
     private String lastdata;
 
+    @Getter
+    @Setter
     @Column(name = "duration")
     private Long duration;
 
+    @Getter
+    @Setter
     @Column(name = "billsec")
     private Long billsec;
 
+    @Getter
+    @Setter
     @Column(name = "disposition")
     private String disposition;
 
+    @Getter
+    @Setter
     @Column(name = "amaflags")
     private Integer amaflags;
 
+    @Getter
+    @Setter
     @Column(name = "accountcode")
     private String accountcode;
 
+    @Getter
+    @Setter
     @Column(name = "uniqueid")
     private String uniqueid;
 
+    @Getter
+    @Setter
     @Column(name = "userfield")
     private String userfield;
 
-    public Record() {}
+    @Getter
+    @Setter
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "direction_id")
+    private Direction direction;
 
-    public Record(LocalDateTime calldate, String clid, String src, String dst
-            , String dcontext, String channel, String dstchannel
-            , String lastapp, String lastdata, Long duration, Long billsec
-            , String disposition, Integer amaflags, String accountcode
-            , String uniqueid, String userfield) {
-        this.calldate = calldate;
-        this.clid = clid;
-        this.src = src;
-        this.dst = dst;
-        this.dcontext = dcontext;
-        this.channel = channel;
-        this.dstchannel = dstchannel;
-        this.lastapp = lastapp;
-        this.lastdata = lastdata;
-        this.duration = duration;
-        this.billsec = billsec;
-        this.disposition = disposition;
-        this.amaflags = amaflags;
-        this.accountcode = accountcode;
-        this.uniqueid = uniqueid;
-        this.userfield = userfield;
-    }
+//    public Record() {
+//    }
+//
+//    public Record(LocalDateTime calldate, String clid, String src, String dst
+//            , String dcontext, String channel, String dstchannel
+//            , String lastapp, String lastdata, Long duration, Long billsec
+//            , String disposition, Integer amaflags, String accountcode
+//            , String uniqueid, String userfield) {
+//        this.calldate = calldate;
+//        this.clid = clid;
+//        this.src = src;
+//        this.dst = dst;
+//        this.dcontext = dcontext;
+//        this.channel = channel;
+//        this.dstchannel = dstchannel;
+//        this.lastapp = lastapp;
+//        this.lastdata = lastdata;
+//        this.duration = duration;
+//        this.billsec = billsec;
+//        this.disposition = disposition;
+//        this.amaflags = amaflags;
+//        this.accountcode = accountcode;
+//        this.uniqueid = uniqueid;
+//        this.userfield = userfield;
+//    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDateTime getCalldate() {
-        return calldate;
-    }
-
-    public void setCalldate(LocalDateTime calldate) {
-        this.calldate = calldate;
-    }
-
-    public String getClid() {
-        return clid;
-    }
-
-    public void setClid(String clid) {
-        this.clid = clid;
-    }
-
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
-    }
-
-    public String getDst() {
-        return dst;
-    }
-
-    public void setDst(String dst) {
-        this.dst = dst;
-    }
-
-    public String getDcontext() {
-        return dcontext;
-    }
-
-    public void setDcontext(String dcontext) {
-        this.dcontext = dcontext;
-    }
-
-    public String getChannel() {
-        return channel;
-    }
-
-    public void setChannel(String channel) {
-        this.channel = channel;
-    }
-
-    public String getDstchannel() {
-        return dstchannel;
-    }
-
-    public void setDstchannel(String dstchannel) {
-        this.dstchannel = dstchannel;
-    }
-
-    public String getLastapp() {
-        return lastapp;
-    }
-
-    public void setLastapp(String lastapp) {
-        this.lastapp = lastapp;
-    }
-
-    public String getLastdata() {
-        return lastdata;
-    }
-
-    public void setLastdata(String lastdata) {
-        this.lastdata = lastdata;
-    }
-
-    public Long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Long duration) {
-        this.duration = duration;
-    }
-
-    public Long getBillsec() {
-        return billsec;
-    }
-
-    public void setBillsec(Long billsec) {
-        this.billsec = billsec;
-    }
-
-    public String getDisposition() {
-        return disposition;
-    }
-
-    public void setDisposition(String disposition) {
-        this.disposition = disposition;
-    }
-
-    public Integer getAmaflags() {
-        return amaflags;
-    }
-
-    public void setAmaflags(Integer amaflags) {
-        this.amaflags = amaflags;
-    }
-
-    public String getAccountcode() {
-        return accountcode;
-    }
-
-    public void setAccountcode(String accountcode) {
-        this.accountcode = accountcode;
-    }
-
-    public String getUniqueid() {
-        return uniqueid;
-    }
-
-    public void setUniqueid(String uniqueid) {
-        this.uniqueid = uniqueid;
-    }
-
-    public String getUserfield() {
-        return userfield;
-    }
-
-    public void setUserfield(String userfield) {
-        this.userfield = userfield;
-    }
-
-    @Override
-    public String toString() {
-        return "Record{" +
-                "id=" + id +
-                ", calldate=" + calldate +
-                ", clid='" + clid + '\'' +
-                ", src='" + src + '\'' +
-                ", dst='" + dst + '\'' +
-                ", dcontext='" + dcontext + '\'' +
-                ", channel='" + channel + '\'' +
-                ", dstchannel='" + dstchannel + '\'' +
-                ", lastapp='" + lastapp + '\'' +
-                ", lastdata='" + lastdata + '\'' +
-                ", duration=" + duration +
-                ", billsec=" + billsec +
-                ", disposition='" + disposition + '\'' +
-                ", amaflags=" + amaflags +
-                ", accountcode='" + accountcode + '\'' +
-                ", uniqueid='" + uniqueid + '\'' +
-                ", userfield='" + userfield + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Record{" +
+//                ", calldate=" + calldate +
+//                ", clid='" + clid + '\'' +
+//                ", src='" + src + '\'' +
+//                ", dst='" + dst + '\'' +
+//                ", dcontext='" + dcontext + '\'' +
+//                ", channel='" + channel + '\'' +
+//                ", dstchannel='" + dstchannel + '\'' +
+//                ", lastapp='" + lastapp + '\'' +
+//                ", lastdata='" + lastdata + '\'' +
+//                ", duration=" + duration +
+//                ", billsec=" + billsec +
+//                ", disposition='" + disposition + '\'' +
+//                ", amaflags=" + amaflags +
+//                ", accountcode='" + accountcode + '\'' +
+//                ", uniqueid='" + uniqueid + '\'' +
+//                ", userfield='" + userfield + '\'' +
+//                '}';
+//    }
 }

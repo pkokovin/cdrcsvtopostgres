@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtil {
@@ -18,4 +19,11 @@ public class DateTimeUtil {
         LocalDateTime result = LocalDateTime.of(LocalDate.parse(parts[0]), LocalTime.parse(parts[1]));
         return result;
     }
+    public static LocalDateTime getBegin(Month month) {
+        return LocalDateTime.of(LocalDate.of(LocalDate.now().getYear(), month, 1), LocalTime.MIN);
+    }
+    public static LocalDateTime getEnd(Month month) {
+        return LocalDateTime.of(LocalDate.of(LocalDate.now().getYear(), month.plus(1), 1).minusDays(1), LocalTime.MAX);
+    }
+
 }
