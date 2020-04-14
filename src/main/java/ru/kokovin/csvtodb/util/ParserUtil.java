@@ -3,7 +3,10 @@ package ru.kokovin.csvtodb.util;
 import ru.kokovin.csvtodb.model.Record;
 
 
+import javax.transaction.Transactional;
+
 import static ru.kokovin.csvtodb.util.DateTimeUtil.*;
+import static ru.kokovin.csvtodb.util.DirectionUtil.findDirection;
 
 public class ParserUtil {
     public static Record parse(String rec) {
@@ -32,6 +35,7 @@ public class ParserUtil {
             record.setAmaflags(cut(params[15]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(params[16]));
             record.setUserfield(cut(params[17]));
+            record.setDirection(findDirection(record.getDst()));
         } else if ((rec.contains("Dial") && rec.contains("ANSWERED"))) {
             String[] paramsFirst = rec.split("\",\"");
             String[] paramsSec = rec.split(",");
@@ -51,6 +55,7 @@ public class ParserUtil {
             record.setAmaflags(cut(paramsSec[paramsSec.length - 3]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(paramsSec[paramsSec.length - 2]));
             record.setUserfield(cut(paramsSec[paramsSec.length - 1]));
+            record.setDirection(findDirection(record.getDst()));
         } else {
             String[] paramsFirst = rec.split("\",\"");
             String[] paramsSec = rec.split(",");
@@ -70,6 +75,7 @@ public class ParserUtil {
             record.setAmaflags(cut(paramsSec[paramsSec.length - 3]).equals("DOCUMENTATION") ? 3 : 0);
             record.setUniqueid(cut(paramsSec[paramsSec.length - 2]));
             record.setUserfield(cut(paramsSec[paramsSec.length - 1]));
+            record.setDirection(findDirection(record.getDst()));
         }
         return record;
     }

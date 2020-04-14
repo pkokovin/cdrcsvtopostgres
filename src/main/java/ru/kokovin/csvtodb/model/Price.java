@@ -5,10 +5,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @SuppressWarnings("PMD")
-@ToString
+//@ToString
 @Entity
 @Table(name = "price")
 public class Price extends AbstractIdentifiableObject {
@@ -30,8 +30,8 @@ public class Price extends AbstractIdentifiableObject {
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "price", fetch = FetchType.EAGER)
-    private Collection<Direction> directions;
+    @OneToMany(mappedBy = "price", fetch = FetchType.LAZY)
+    private List<Direction> directions;
 
 //    public Price() {}
 //
@@ -41,12 +41,12 @@ public class Price extends AbstractIdentifiableObject {
 //        this.price = price;
 //    }
 
-//    @Override
-//    public String toString() {
-//        return "Price{" +
-//                ", zoneNumber=" + zoneNumber +
-//                ", description='" + description + '\'' +
-//                ", price=" + price +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Price{" +
+                ", zoneNumber=" + zoneNumber +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

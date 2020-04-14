@@ -3,6 +3,8 @@ package ru.kokovin.csvtodb.model;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -11,7 +13,8 @@ import java.time.LocalDateTime;
 @SuppressWarnings({"PMD", "JpaAttributeTypeInspection"})
 @ToString
 @Entity
-@Table(name = "cdr")
+@Table(name = "cdr", uniqueConstraints =
+@UniqueConstraint(columnNames = {"calldate", "clid", "src", "dst", "billsec", "uniqueid"}, name = "cdr_unique_const"))
 @NamedNativeQueries({
         @NamedNativeQuery(
                 name = "GET_RECORDS_BY_CLID",
@@ -106,8 +109,9 @@ public class Record extends AbstractIdentifiableObject{
 
     @Getter
     @Setter
-    @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "direction_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "direction_id", nullable = true)
     private Direction direction;
 
 //    public Record() {

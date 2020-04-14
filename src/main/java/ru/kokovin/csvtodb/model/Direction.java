@@ -6,11 +6,18 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @SuppressWarnings("PMD")
 @Entity
-@ToString
+//@ToString
 @Table(name = "direction")
+@NamedNativeQueries({
+        @NamedNativeQuery(
+                name = "GET_DIRECTIONS_BY_DEST",
+                query = " select * from direction d where d.route_pattern =:route_pattern ",
+                resultClass = Direction.class)
+})
 public class Direction extends AbstractIdentifiableObject{
 
     @Getter
@@ -30,8 +37,8 @@ public class Direction extends AbstractIdentifiableObject{
 
     @Getter
     @Setter
-    @OneToMany(mappedBy = "direction", fetch = FetchType.EAGER)
-    private Collection<Record> records;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "direction")
+    private List<Record> records;
 
     @Getter
     @Setter
@@ -48,12 +55,12 @@ public class Direction extends AbstractIdentifiableObject{
 //        this.zone = zone;
 //    }
 
-//    @Override
-//    public String toString() {
-//        return "Direction{" +
-//                ", pattern='" + pattern + '\'' +
-//                ", description='" + description + '\'' +
-//                ", zone=" + zone +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return "Direction{" +
+                ", pattern='" + pattern + '\'' +
+                ", description='" + description + '\'' +
+                ", zone=" + zone +
+                '}';
+    }
 }
