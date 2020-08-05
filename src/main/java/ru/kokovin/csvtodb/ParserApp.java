@@ -40,6 +40,8 @@ public class ParserApp {
                 log.info("Inserting record: " + record.toString());
                 save(record);
             }
+            String absPath = curr.getAbsolutePath();
+            curr.renameTo(new File(absPath + ".bak"));
         }
     }
 

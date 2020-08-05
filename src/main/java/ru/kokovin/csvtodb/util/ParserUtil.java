@@ -3,8 +3,6 @@ package ru.kokovin.csvtodb.util;
 import ru.kokovin.csvtodb.model.Record;
 
 
-import javax.transaction.Transactional;
-
 import static ru.kokovin.csvtodb.util.DateTimeUtil.*;
 import static ru.kokovin.csvtodb.util.DirectionUtil.findDirection;
 
