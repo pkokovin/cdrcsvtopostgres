@@ -1,5 +1,6 @@
 package ru.kokovin.csvtodb;
 
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
@@ -16,12 +17,10 @@ import java.util.List;
 import static ru.kokovin.csvtodb.util.ParserUtil.parse;
 import static ru.kokovin.csvtodb.util.ValidationUtil.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.kokovin.csvtodb.util.HibernateUtil;
 
+@Slf4j
 public class ParserApp {
-    private static Logger log = LoggerFactory.getLogger(ParserApp.class);
     List<Record> recordList = null;
     Charset utf8 = StandardCharsets.UTF_8;
 

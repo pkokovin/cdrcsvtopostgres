@@ -1,7 +1,6 @@
 package ru.kokovin.csvtodb.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,8 +8,8 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 public class DateTimeUtil {
-    private static final Logger log = LoggerFactory.getLogger(DateTimeUtil.class);
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static LocalDateTime convert(String date) {
         log.info("trying convert to date string : " + date);

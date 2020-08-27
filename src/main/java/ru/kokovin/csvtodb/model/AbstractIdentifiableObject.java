@@ -13,6 +13,8 @@ import javax.persistence.MappedSuperclass;
  * Common 'id' part of all entities.
  */
 @SuppressWarnings("PMD")
+@Getter
+@Setter
 @MappedSuperclass
 @ToString
 public class AbstractIdentifiableObject {
@@ -21,7 +23,5 @@ public class AbstractIdentifiableObject {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
-    @Setter
     private Long id;
 }

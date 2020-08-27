@@ -3,19 +3,17 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import ru.kokovin.csvtodb.ParserApp;
 
 import static ru.kokovin.csvtodb.util.DateTimeUtil.*;
 import static ru.kokovin.csvtodb.util.ExcellUtil.createExcel;
 
-
+@Slf4j
 public class Application {
-    private static Logger log = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) throws IOException {
-//        ParserApp parserApp = new ParserApp();
+        ParserApp parserApp = new ParserApp();
 ////        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\part1_1-24\\");
 ////        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\test\\");
 //        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_jun\\");

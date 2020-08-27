@@ -1,15 +1,13 @@
 package ru.kokovin.csvtodb.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.kokovin.csvtodb.model.Record;
-import ru.kokovin.csvtodb.model.RecordTO;
+import ru.kokovin.csvtodb.dto.RecordTO;
 import static ru.kokovin.csvtodb.util.PriceUtil.*;
 
 import java.io.File;
@@ -19,8 +17,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class ExcellUtil {
-    private static Logger log = LoggerFactory.getLogger(ExcellUtil.class);
     private ExcellUtil(){
     }
 
