@@ -79,7 +79,7 @@ public class Record extends AbstractIdentifiableObject{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "direction_id", nullable = true)
+    @JoinColumn(name = "direction_id")
     private Direction direction;
 
 }

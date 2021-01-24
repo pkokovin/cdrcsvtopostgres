@@ -10,6 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(of = {"zoneNumber", "description", "price"})
 @Entity
 @Table(name = "price")
 public class Price extends AbstractIdentifiableObject {
@@ -26,12 +27,12 @@ public class Price extends AbstractIdentifiableObject {
     @OneToMany(mappedBy = "price", fetch = FetchType.LAZY)
     private List<Direction> directions;
 
-    @Override
-    public String toString() {
-        return "Price{" +
-                ", zoneNumber=" + zoneNumber +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Price{" +
+//                ", zoneNumber=" + zoneNumber +
+//                ", description='" + description + '\'' +
+//                ", price=" + price +
+//                '}';
+//    }
 }

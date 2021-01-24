@@ -10,6 +10,7 @@ import java.util.List;
 @Table(name = "direction")
 @Getter
 @Setter
+@ToString(of = {"pattern", "description", "zone"})
 @NoArgsConstructor
 @AllArgsConstructor
 @NamedNativeQueries({
@@ -36,12 +37,12 @@ public class Direction extends AbstractIdentifiableObject{
     @JoinColumn(name = "price_id")
     private Price price;
 
-    @Override
-    public String toString() {
-        return "Direction{" +
-                ", pattern='" + pattern + '\'' +
-                ", description='" + description + '\'' +
-                ", zone=" + zone +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Direction{" +
+//                ", pattern='" + pattern + '\'' +
+//                ", description='" + description + '\'' +
+//                ", zone=" + zone +
+//                '}';
+//    }
 }

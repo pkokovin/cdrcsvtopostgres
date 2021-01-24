@@ -1,6 +1,5 @@
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.Month;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,37 +13,19 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
         ParserApp parserApp = new ParserApp();
-////        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\part1_1-24\\");
-////        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\test\\");
-//        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_jun\\");
-//        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_jul\\");
-//        parserApp.parseDir("C:\\Users\\pashak\\Documents\\LT_CDR\\all\\1\\");
-////        String dest_folder_february_2020 = "C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_feb\\test\\";
-//        String dest_folder_march_2020 = "C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\test\\";
-//        String dest_folder_apr_2020 = "C:\\Users\\pashak\\Documents\\LT_CDR\\cdr_2020_mar\\test\\";
-
-
-        String dest_folder_last_month_all = "C:\\Users\\pashak\\Documents\\LT_CDR\\";
+//        path to dir with CDRs
+//        like "C:\\dir1\\dir2\\dit3\\"
+        parserApp.parseDir("path_to_cdrs");
+//        path to dst folder
+//        like "C:\\Users\\user\\Documents\\some_dir_name\\"
+        String dest_folder_last_month_all = "path_to_output_dir";
         String[] prefixes = new String[]{
-                "45611",
-                "38202",
-                "42977",
-                "42577",
-                "45636",
-                "45637",
-                "45645",
-                "45646",
-                "6114",
-                "6115"
+//                write prefixes of phone numbers
+                "XXXXX"
         };
         for (String prefix : prefixes) {
-//            createExcel(prefix, getBegin(Month.JANUARY),
-//                    getEnd(Month.JANUARY),
-//                    dest_folder_march_all);
-//            createExcel(prefix, getBegin(Month.FEBRUARY),
-//                    getEnd(Month.FEBRUARY), dest_folder_march_all);
-            createExcel(prefix, getBegin(Month.JULY),
-                    getEnd(Month.JULY), dest_folder_last_month_all);
+            createExcel(prefix, getBegin(Month.OCTOBER),
+                    getEnd(Month.OCTOBER), dest_folder_last_month_all);
         }
     }
 }
