@@ -24,8 +24,8 @@ public class Application {
                 "XXXXX"
         };
         for (String prefix : prefixes) {
-            createExcel(prefix, getBegin(Month.OCTOBER),
-                    getEnd(Month.OCTOBER), dest_folder_last_month_all);
+            createExcel(prefix, getBegin(Month.JANUARY),
+                    getEnd(Month.JANUARY), dest_folder_last_month_all);
         }
     }
 }

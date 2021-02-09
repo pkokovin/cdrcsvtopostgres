@@ -72,16 +72,16 @@ public class ExcellUtil {
                 createSheetHeader(s, ++rNum, recordTO);
             }
 
-            try (FileOutputStream fos = new FileOutputStream(new File(destinationPath +
+            File output = new File((destinationPath +
                     prefix +"_bigAsterCalls_" + (begin.getMonth() == end.getMonth()? (begin.getMonth()).toString()
-                    : (begin.getMonth().toString().concat("-").concat(end.getMonth().toString())) ) ) + "XSSF.xlsx")) {
+                    : (begin.getMonth().toString().concat("-").concat(end.getMonth().toString())) ) ) + "XSSF.xlsx");
+            try (FileOutputStream fos = new FileOutputStream(output)) {
                 wb.write(fos);
+                log.info("Excell new файл успешно создан: " + output.getAbsolutePath());
             } catch (IOException e) {
-                e.printStackTrace();
+                log.warn(e.getMessage());
             }
 //            System.out.println("Excell файл успешно создан");
-            log.info("Excell new файл успешно создан");
-
         }
 
         try(Session session = HibernateUtil.getSessionFactory().openSession()) {

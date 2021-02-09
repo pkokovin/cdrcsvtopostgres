@@ -30,6 +30,12 @@
             <artifactId>jcl-over-slf4j</artifactId>
             <version>1.7.20</version>
         </dependency>
+        <!--csv parser-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>1.8</version>
+        </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>

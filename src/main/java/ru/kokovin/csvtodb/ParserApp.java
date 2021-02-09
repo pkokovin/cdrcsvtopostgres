@@ -1,13 +1,17 @@
 package ru.kokovin.csvtodb;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.resource.transaction.spi.TransactionStatus;
 import ru.kokovin.csvtodb.model.Record;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,20 +31,30 @@ public class ParserApp {
     public void parseDir(String path) throws IOException {
         File parseDir = new File(path);
         File[] files = parseDir.listFiles();
-        for (
-                File curr : files) {
-            List<String> records = new ArrayList<>();
-            if (curr.isFile() && curr.getName().startsWith("Master")) {
-                records = Files.readAllLines(curr.toPath());
+        if (files != null) {
+            for (
+                    File curr : files) {
+                Reader in = new FileReader(curr);
+                Iterable<CSVRecord> records = null;
+                if (curr.isFile()
+                        && curr.getName().startsWith("Master")
+                        && curr.getName().endsWith(".csv")) {
+                    records = CSVFormat.DEFAULT
+                            .withIgnoreSurroundingSpaces()
+//                        .withNullString("")
+                            .parse(in);
+                }
+                if (records != null) {
+                    for (CSVRecord rec : records) {
+                        log.info("Trying to parse record: " + rec);
+                        Record record = parse(rec);
+                        log.info("Inserting record: " + record.toString());
+                        save(record);
+                    }
+                }
+                String absPath = curr.getAbsolutePath();
+                curr.renameTo(new File(absPath + ".bak"));
             }
-            for (String rec : records) {
-                log.info("Trying to parse record: " + rec);
-                Record record = parse(rec);
-                log.info("Inserting record: " + record.toString());
-                save(record);
-            }
-            String absPath = curr.getAbsolutePath();
-            curr.renameTo(new File(absPath + ".bak"));
         }
     }
 
